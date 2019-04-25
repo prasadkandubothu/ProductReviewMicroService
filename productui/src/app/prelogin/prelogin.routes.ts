@@ -1,24 +1,31 @@
-import { RouterModule, Routes } from '@angular/router';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { PreloginComponent } from './prelogin.component';
+import {RouterModule, Routes, Router} from '@angular/router';
 
-const PreloginRoutes: Routes=[
+import {PreloginComponent } from './prelogin.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { WelcomeComponent} from './welcome/welcome.component';
+
+const preloginRoutes :Routes= [
+
     {
         path:'',
         component : PreloginComponent,
         children : [
             {
-                path:'',
-                redirectTo:'welcome',
-                pathMatch:'full'
+                path : 'login',
+                component : LoginComponent
             },
             {
-                path:'welcome',
-                component:WelcomeComponent
+                path:'register',
+                component :RegisterComponent
+            },
+            {
+                path :'welcome',
+                component : WelcomeComponent
             }
-        ]        
+
+        ]
     }
-]
+];
 
-export const PreLoginRouting = RouterModule.forRoot(PreloginRoutes, {useHash:true});
-
+export const PreloginRouting = RouterModule.forChild(preloginRoutes);

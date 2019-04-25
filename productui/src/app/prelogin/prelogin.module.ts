@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { PreLoginRouting } from './prelogin.routes';
 import { PreloginComponent } from './prelogin.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { PreloginRouting } from './prelogin.routes';
 
 @NgModule({
   imports: [
     CommonModule,
-    PreLoginRouting
+    PreloginRouting
   ],
-  declarations: [WelcomeComponent, PreloginComponent],
-  exports:[PreloginComponent]
+  declarations: [PreloginComponent, WelcomeComponent, LoginComponent, RegisterComponent]
 })
 export class PreloginModule { }

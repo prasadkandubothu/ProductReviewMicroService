@@ -3,16 +3,19 @@ version: '3'
 services:
 
   eureka-server-web:
+    container_name: eureka_container
+    hostname: eureka_host
     image: eureka-server-web-image
     build:
       context: ./EurekaServerApp
     ports:
       - 8761:8761    
     volumes:
-      - /data/eureka-server
-    restart: always
+      - /data/eureka-server    
       
   product-service-db:
+    container_name: product_db_container
+    hostname: product_db_host
     image: mysql:5.6
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -21,8 +24,10 @@ services:
       - MYSQL_PASSWORD=prasad
     volumes:
       - /data/product_mysql
-        
+
   review-service-db:
+    container_name: review_db_container
+    hostname: review_db_host
     image: mysql:5.6
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -31,70 +36,48 @@ services:
       - MYSQL_PASSWORD=prasad
     volumes:
       - /data/review_mysql 
-
+  
+    
   product-service-web:
+    container_name: product_web_container
     image: product-service-web-image
     build:
       context: ./ProductService/      
     environment:
-      - DB_HOST=product-service-db
+      - DB_HOST=product_db_container
       - DB_USER=prasad
       - DB_PWD=prasad
-      - EUREKA_HOST=eureka-server-web
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server-web:8761/eureka      
     depends_on:    
       - product-service-db
-      - eureka-server-web      
+      - eureka-server-web
+    links:    
+      - product-service-db
+      - eureka-server-web     
     ports:
       - 8082:8082
     volumes:
       - /data/product-review
-    restart: always      
-      
+          
+              
   review-service-web:
+    container_name: review_web_container
     image: review-service-web-image
     build:
       context: ./ProductReview
     environment:
-      - DB_HOST=review-service-db
+      - DB_HOST=review_db_container
       - DB_USER=prasad
       - DB_PWD=prasad
-      - EUREKA_HOST=eureka-server-web
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server-web:8761/eureka
     depends_on:
+      - review-service-db
+      - eureka-server-web
+    links:
       - review-service-db
       - eureka-server-web
     ports:
       - 8083:8083
     volumes:
       - /data/product-review
-    restart: always
-
-  zipkin-service-web:
-    image: zipkin-service-web-image
-    build:
-      context: ./Zipkin/
-    environment:
-      - EUREKA_HOST=eureka-server-web
-    depends_on:
-      - eureka-server-web
-    ports:
-      - 9411:9411
-    volumes:
-      - /data/zipkin-service
-    restart: always
-
-  zuul-service-web:
-    image: zuul-service-web-image
-    build:
-      context: ./Zuul_ApiGateway/
-    environment:
-      - EUREKA_HOST=eureka-server-web
-    depends_on:
-      - eureka-server-web      
-    ports:
-      - 9999:9999
-    volumes:
-      - /data/zuul-service
-    restart: always    
-
-
-          
+            
