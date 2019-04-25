@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 
 import { PreloginModule } from './prelogin/prelogin.module';
 import { SharedModule } from './shared/shared.module';
-import { FooterComponent } from './shared/footer/footer.component';
-import { HeaderComponent } from './shared/header/header.component';
-
-
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { ProductService } from './shared/services/product.service';
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
@@ -19,9 +19,10 @@ import { HeaderComponent } from './shared/header/header.component';
     BrowserModule,
     AppRouting,    
     PreloginModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

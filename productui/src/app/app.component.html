@@ -1,4 +1,8 @@
 App Component <button class="btn btn-primary">Test Button</button>
+<div>
+    <button (click)="loadUser()">Load profile</button>
+    {{ profile | json }}
+  </div>
 <app-header></app-header>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
