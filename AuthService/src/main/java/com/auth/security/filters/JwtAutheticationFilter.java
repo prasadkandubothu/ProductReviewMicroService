@@ -24,51 +24,45 @@ import com.auth.util.SecurityConstants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter{
-	
-	@Autowired
+public class JwtAutheticationFilter extends UsernamePasswordAuthenticationFilter {
+
+	//@Autowired
 	private AuthenticationManager authenticationManager;
+
+	public JwtAutheticationFilter(AuthenticationManager authenticationManager) {
+		 this.authenticationManager = authenticationManager;
+		setFilterProcessesUrl(SecurityConstants.AUTH_LOGIN_URL);
+	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		System.out.println("attempt authentication called");
-		String username=request.getParameter("username");
-		String password=request.getParameter("password");
-		
-		UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(username, password);
-		return authenticationManager.authenticate(token);
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+				password);
+
+		return authenticationManager.authenticate(authenticationToken);
 	}
 
 	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
-		User user=(User)authResult.getPrincipal();
-		
-		List<String> roles=user.getAuthorities().stream()
-		.map(GrantedAuthority::getAuthority)
-		.collect(Collectors.toList());
-		
-		String token=Jwts.builder()
-		.setSubject(user.getUsername())
-		.setExpiration(new Date(System.currentTimeMillis()+864000000))
-		.signWith(SignatureAlgorithm.HS512, "secret")
-		.setIssuer(SecurityConstants.JWT_TOKEN_ISSUER)
-		.setAudience(SecurityConstants.JWT_TOKEN_AUDIENCE)
-		.setHeaderParam("typ",SecurityConstants.TOKEN_TYPE)
-		.claim("rol", roles)
-		.compact();
-		//super.successfulAuthentication(request, response, chain, authResult);
-		response.addHeader(SecurityConstants.JWT_TOKEN_HEADER, SecurityConstants.JWT_TOKEN_PREFIX+token);
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain, Authentication authentication) {
+		User user = ((User) authentication.getPrincipal());
+
+		List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+				.collect(Collectors.toList());
+
+		// String signingKey = SecurityConstants.JWT_SECRET.getBytes();
+
+		String token = Jwts.builder()
+				// .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
+				.signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_SECRET)
+				.setHeaderParam("typ", SecurityConstants.TOKEN_TYPE).setIssuer(SecurityConstants.JWT_TOKEN_ISSUER)
+				.setAudience(SecurityConstants.JWT_TOKEN_AUDIENCE).setSubject(user.getUsername())
+				.setExpiration(new Date(System.currentTimeMillis() + 864000000)).claim("rol", roles).compact();
+
+		response.addHeader(SecurityConstants.JWT_TOKEN_HEADER, SecurityConstants.JWT_TOKEN_PREFIX + token);
 	}
 
-	@Override
-	public void setFilterProcessesUrl(String filterProcessesUrl) {
-		// TODO Auto-generated method stub
-		System.out.println("set processing url called");
-		super.setFilterProcessesUrl(SecurityConstants.AUTH_LOGIN_URL);
-	}
-	
-	
-	
 }
