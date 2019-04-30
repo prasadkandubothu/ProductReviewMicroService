@@ -4,17 +4,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DetailsController {
+@RequestMapping("/api")
+public class PrivateController {
 	
-	
-	@RequestMapping("/home")
-	public String home() {
-		return "home page";
-	}
-	
-	@RequestMapping("/details")
+		
+	@RequestMapping("/private")
 	public String details() {
-		return "details page";
+		return "private page";
 	}
 	
 
