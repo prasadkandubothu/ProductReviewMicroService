@@ -8,26 +8,28 @@ import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
+
 import { ProductService } from './shared/services/product.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { AppHttpClientService } from './apphttpclient.service';
+import { AuthenticationModel } from './shared/models/AuthenticationModel';
+import { LoginCheckAuthguard } from './shared/services/logincheck.authguard';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent,HeaderComponent, FooterComponent  
+    AppComponent, HeaderComponent, FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRouting,    
-    PreloginModule,
+    AppRouting, 
     SharedModule,
     HttpModule,
-    HttpClientModule,
-    AdminModule,
-    UserModule
+    HttpClientModule   
   ],
-  providers: [ProductService, AppHttpClientService],
+  providers: [ProductService, AppHttpClientService, AuthenticationModel, LoginCheckAuthguard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

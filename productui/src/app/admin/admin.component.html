@@ -1,11 +1,19 @@
-Admin_Navbar
-
-
-<p>
-  All Curd operation to Products and Reviews
-</p>
+<!--<nav class="navbar navbar-default" style="background-color: #2493d4">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><span style="color:white">Product Review Service</span></a>
+    </div>
+    <ul class="nav" routerLinkActive="active">
+      <!--<li class="active"><a routerLink="prelogin/register">Register</a></li>-->
+    <!--  <li><a routerLink="" style="color:white" (click)="logout">Logout</a></li>      -->
+     <!-- <li><a routerLink="admin">Admin</a></li>   
+      <li><a routerLink="user">Users</a></li>
+      -->
+    <!--</ul>
+  </div>
+</nav>-->
 
 <ul>
-  <li *ngFor="let post of posts">{{post.id}}</li>
+  <li routerLinkActive="active"><a routerLink="/add">Add Product</a></li>
 </ul>
-
+<router-outlet></router-outlet>

@@ -1,0 +1,18 @@
+html,body{min-height:100%;}
+
+.container {
+   min-height:100%;
+   position:relative;
+}
+.header{ 
+  /* background:#ff0;
+   padding:10px;*/
+}
+
+.body{
+   
+}
+
+.footer{
+ /*   bottom: 0;*/
+}

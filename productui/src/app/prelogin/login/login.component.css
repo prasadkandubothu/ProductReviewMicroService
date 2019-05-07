@@ -1,4 +1,15 @@
-.loginForm {
+/*.loginForm {
     left:50%;
     height:50%;
+}*/
+
+.loginDiv{
+    left:38%;
+    width:20%;       
+    position:relative;
 }
+/*
+.has-error{
+    color: red;
+    border: 1px solid red;
+}*/

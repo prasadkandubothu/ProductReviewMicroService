@@ -11,6 +11,11 @@ const preloginRoutes :Routes= [
         path:'',
         component : PreloginComponent,
         children : [
+             {
+                path: '',
+                redirectTo: 'login',
+                pathMatch: 'full'
+            },
             {
                 path : 'login',
                 component : LoginComponent

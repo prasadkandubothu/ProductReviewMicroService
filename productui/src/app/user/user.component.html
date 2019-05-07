@@ -1,3 +1,45 @@
-<p>
-  user works!
-</p>
+
+<br/>
+<!--<table align="right" style="padding:10px;">
+  <tr><td>Search : </td><td><input type="textsearch" class="form-control" name="searchText" id="searchText" 
+  [(ngModel)]="searchText" aria-describedby="helpId" placeholder="Product Id/Name"></td></tr>
+<tr></tr>
+</table>-->
+<table align="right" style="padding:10px;">
+  <tr><td>Search : </td><td><input type="textsearch" class="form-control" name="searchText" id="searchText" 
+  [(ngModel)]="searchText" aria-describedby="helpId" placeholder="Product Id/Name"></td></tr>
+<tr></tr>
+</table>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>PRODUCT IMAGE</th>
+      <th>PRODUCT ID</th>
+      <th>PRODUCT NAME</th>
+      <th>PRODUCT DESC</th>
+      <th>PRODUCT REVIEW</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products | productSearch : searchText">
+      <td><img src="{{product.productImage}}" class="imgStyle"/></td>
+      <td>{{product.productId}}</td>
+      <td>{{product.productName}}</td>      
+      <td>{{product.productDescription}}</td>
+      <td>
+        <img id="{{product.productId}}_1" src="../../assets/empty.png" class="imgStyle" (mouseenter)="imgHover($event)" (mouseout)="imgUnHover($event)"
+        (click)="saveReview($event)"/>
+        <img id="{{product.productId}}_2" src="../../assets/empty.png" class="imgStyle" (mouseenter)="imgHover($event)" (mouseout)="imgUnHover($event)"
+        (click)="saveReview($event)"/>
+        <img id="{{product.productId}}_3" src="../../assets/empty.png" class="imgStyle" (mouseenter)="imgHover($event)" (mouseout)="imgUnHover($event)"
+        (click)="saveReview($event)"/>
+        <img id="{{product.productId}}_4" src="../../assets/empty.png" class="imgStyle" (mouseenter)="imgHover($event)" (mouseout)="imgUnHover($event)"
+        (click)="saveReview($event)"/>
+        <img id="{{product.productId}}_5" src="../../assets/empty.png" class="imgStyle" (mouseenter)="imgHover($event)" (mouseout)="imgUnHover($event)"
+        (click)="saveReview($event)"/>
+      </td>
+    </tr>   
+  </tbody>
+</table>
+

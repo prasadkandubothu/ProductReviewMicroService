@@ -6,12 +6,17 @@ ul li {
 /*    background: red;*/
 }
 ul li a {
-    text-decoration: none;
+    /*text-decoration: none;*/
     color: white
 }
 
-.active1{
-    background-color: burlywood;
-    color: black;
-    font-weight: bold;
+.active{    
+    /*font-weight: bold;*/
+    /*font-style: italic;*/
+    /*border-bottom: 1px solid white;*/
+    text-decoration: underline;
+}
+
+#logout:hover{
+    text-decoration: underline;
 }

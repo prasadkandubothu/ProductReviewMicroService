@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Product} from './models/product.model';
+import { ProductSearchPipe } from './pipes/productsearch.pipe.';
 
 
 @NgModule({
   imports: [
     CommonModule
-  ]
-  //declarations: [HeaderComponent, FooterComponent]
+  ],
+  exports : [ ProductSearchPipe ],
+  declarations: [ProductSearchPipe]
 })
 export class SharedModule { }
